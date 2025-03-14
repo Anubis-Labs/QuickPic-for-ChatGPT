@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="64" cy="64" r="60" fill="#10a37f" />
+  
+  <!-- Camera body -->
+  <rect x="32" y="44" width="64" height="40" rx="4" ry="4" fill="white" />
+  
+  <!-- Camera lens -->
+  <circle cx="64" cy="64" r="16" fill="#10a37f" stroke="white" stroke-width="4"/>
+  
+  <!-- Camera flash -->
+  <rect x="76" y="38" width="12" height="8" rx="2" ry="2" fill="white" />
+  
+  <!-- Screenshot corner indicators -->
+  <!-- Top left -->
+  <path d="M28 28 L42 28 L42 32 L32 32 L32 42 L28 42 Z" fill="white" />
+  <!-- Top right -->
+  <path d="M100 28 L86 28 L86 32 L96 32 L96 42 L100 42 Z" fill="white" />
+  <!-- Bottom left -->
+  <path d="M28 100 L42 100 L42 96 L32 96 L32 86 L28 86 Z" fill="white" />
+  <!-- Bottom right -->
+  <path d="M100 100 L86 100 L86 96 L96 96 L96 86 L100 86 Z" fill="white" />
+</svg> 
