@@ -1,6 +1,21 @@
+// Default settings
+const defaultSettings = {
+  captureMethod: 'tab', // tab, desktop, or clipboard
+  showNotifications: true,
+  autoClose: true
+};
+
+// Current settings
+let currentSettings = Object.assign({}, defaultSettings);
+
 document.addEventListener('DOMContentLoaded', function() {
   const captureButton = document.getElementById('captureButton');
   const statusElement = document.getElementById('status');
+  const captureMethodDisplay = document.getElementById('captureMethodDisplay');
+  const openOptionsLink = document.getElementById('openOptions');
+
+  // Load settings
+  loadSettings().then(updateUI);
 
   // Add event listener for the capture button
   captureButton.addEventListener('click', function() {
@@ -31,15 +46,23 @@ document.addEventListener('DOMContentLoaded', function() {
             statusElement.textContent = '';
           }, 3000);
           
-          // Close popup after successful upload
-          setTimeout(() => {
-            window.close();
-          }, 1500);
+          // Close popup after successful upload if auto-close is enabled
+          if (currentSettings.autoClose) {
+            setTimeout(() => {
+              window.close();
+            }, 1500);
+          }
         } else {
           showStatus('Error uploading screenshot', 'error');
         }
       });
     });
+  });
+
+  // Add event listener for the options link
+  openOptionsLink.addEventListener('click', function(e) {
+    e.preventDefault();
+    chrome.runtime.openOptionsPage();
   });
 
   // Function to show status messages
@@ -53,15 +76,43 @@ document.addEventListener('DOMContentLoaded', function() {
     return url.includes('chat.openai.com') || url.includes('chatgpt.com');
   }
 
-  // Check if we're on a ChatGPT tab and update UI accordingly
-  chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-    const activeTab = tabs[0];
-    
-    if (!isChatGPTTab(activeTab.url)) {
-      captureButton.disabled = true;
-      captureButton.style.backgroundColor = '#aaa';
-      captureButton.style.cursor = 'not-allowed';
-      showStatus('Please open ChatGPT to use this extension', 'error');
+  // Function to update the UI based on settings
+  function updateUI() {
+    // Update the capture method display
+    switch (currentSettings.captureMethod) {
+      case 'tab':
+        captureMethodDisplay.textContent = 'Current Tab Capture';
+        break;
+      case 'desktop':
+        captureMethodDisplay.textContent = 'Screen/Window Capture';
+        break;
+      case 'clipboard':
+        captureMethodDisplay.textContent = 'Clipboard Monitoring';
+        break;
+      default:
+        captureMethodDisplay.textContent = 'Current Tab Capture';
     }
+
+    // Check if we're on a ChatGPT tab and update UI accordingly
+    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+      const activeTab = tabs[0];
+      
+      if (!isChatGPTTab(activeTab.url)) {
+        captureButton.disabled = true;
+        captureButton.style.backgroundColor = '#aaa';
+        captureButton.style.cursor = 'not-allowed';
+        showStatus('Please open ChatGPT to use this extension', 'error');
+      }
+    });
+  }
+});
+
+// Load settings from storage
+function loadSettings() {
+  return new Promise((resolve) => {
+    chrome.storage.sync.get({ settings: defaultSettings }, (data) => {
+      currentSettings = data.settings;
+      resolve(currentSettings);
+    });
   });
-}); 
+} 

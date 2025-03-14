@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>QuickPic for ChatGPT - Settings</title>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 0;
+      background-color: #f8f9fa;
+      color: #333;
+    }
+    .header {
+      background: linear-gradient(135deg, #10a37f 0%, #0d8a6c 100%);
+      color: white;
+      padding: 25px 30px;
+      border-radius: 0 0 15px 15px;
+      box-shadow: 0 4px 12px rgba(16, 163, 127, 0.2);
+      margin-bottom: 30px;
+      display: flex;
+      align-items: center;
+    }
+    .logo {
+      width: 40px;
+      height: 40px;
+      margin-right: 15px;
+      background-color: white;
+      border-radius: 10px;
+      padding: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .logo svg {
+      width: 100%;
+      height: 100%;
+      fill: #10a37f;
+    }
+    h1 {
+      color: white;
+      margin: 0;
+      font-size: 28px;
+      font-weight: 600;
+    }
+    .subheader {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.85);
+      margin-top: 5px;
+    }
+    .container {
+      padding: 0 30px 40px;
+    }
+    .option-card {
+      background-color: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      border: 1px solid rgba(0,0,0,0.05);
+      transition: all 0.2s ease;
+    }
+    .option-card:hover {
+      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+    }
+    .option-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .option-header input[type="radio"],
+    .option-header input[type="checkbox"] {
+      margin-right: 15px;
+      width: 20px;
+      height: 20px;
+      accent-color: #10a37f;
+    }
+    .option-title {
+      font-weight: 600;
+      font-size: 18px;
+      margin: 0;
+      color: #333;
+    }
+    .option-description {
+      margin-left: 35px;
+      font-size: 15px;
+      color: #666;
+      line-height: 1.5;
+    }
+    .settings-group {
+      margin-bottom: 40px;
+    }
+    .settings-title {
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #10a37f;
+      font-size: 22px;
+      position: relative;
+      padding-left: 30px;
+      display: flex;
+      align-items: center;
+    }
+    .settings-title-icon {
+      position: absolute;
+      left: 0;
+      width: 24px;
+      height: 24px;
+      color: #10a37f;
+    }
+    button {
+      background-color: #10a37f;
+      color: white;
+      border: none;
+      padding: 14px 24px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-weight: 600;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      display: inline-flex;
+      align-items: center;
+    }
+    button:hover {
+      background-color: #0d8a6c;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    button svg {
+      margin-right: 8px;
+    }
+    #status {
+      color: #10a37f;
+      margin: 0 0 0 15px;
+      font-size: 16px;
+      height: 22px;
+      display: inline-block;
+      font-weight: 500;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    #status.visible {
+      opacity: 1;
+    }
+    .save-section {
+      display: flex;
+      align-items: center;
+    }
+    footer {
+      margin-top: 60px;
+      font-size: 14px;
+      color: #777;
+      text-align: center;
+      padding-bottom: 30px;
+    }
+    footer a {
+      color: #10a37f;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+    .method-icon {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 36px;
+      height: 36px;
+      color: rgba(16, 163, 127, 0.2);
+    }
+    .method-card {
+      position: relative;
+    }
+    .method-card.active {
+      border-color: rgba(16, 163, 127, 0.3);
+      box-shadow: 0 5px 15px rgba(16, 163, 127, 0.1);
+    }
+    .method-card.active .method-icon {
+      color: rgba(16, 163, 127, 0.6);
+    }
+    
+    /* SVG icons */
+    .icon {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      stroke-width: 0;
+      stroke: currentColor;
+      fill: currentColor;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">
+      <svg class="icon" viewBox="0 0 24 24">
+        <path d="M4,4H7L9,2H15L17,4H20A2,2 0 0,1 22,6V18A2,2 0 0,1 20,20H4A2,2 0 0,1 2,18V6A2,2 0 0,1 4,4M12,7A5,5 0 0,0 7,12A5,5 0 0,0 12,17A5,5 0 0,0 17,12A5,5 0 0,0 12,7M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9Z" />
+      </svg>
+    </div>
+    <div>
+      <h1>QuickPic for ChatGPT</h1>
+      <div class="subheader">Settings & Configuration</div>
+    </div>
+  </div>
+  
+  <div class="container">
+    <div class="settings-group">
+      <div class="settings-title">
+        <svg class="settings-title-icon" viewBox="0 0 24 24">
+          <path d="M4,4H7L9,2H15L17,4H20A2,2 0 0,1 22,6V18A2,2 0 0,1 20,20H4A2,2 0 0,1 2,18V6A2,2 0 0,1 4,4M12,7A5,5 0 0,0 7,12A5,5 0 0,0 12,17A5,5 0 0,0 17,12A5,5 0 0,0 12,7M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9Z" />
+        </svg>
+        Screenshot Method
+      </div>
+      
+      <div id="tabCapture" class="option-card method-card">
+        <svg class="method-icon" viewBox="0 0 24 24">
+          <path d="M4,2A2,2 0 0,0 2,4V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V4A2,2 0 0,0 20,2H4M4,4H20V18H4V4M8,6V8H16V6H8M8,10V12H16V10H8M8,14V16H12V14H8Z" />
+        </svg>
+        <div class="option-header">
+          <input type="radio" id="captureTab" name="captureMethod" value="tab">
+          <label class="option-title" for="captureTab">Current Tab Capture</label>
+        </div>
+        <div class="option-description">
+          Captures only the visible part of the current browser tab. This is the simplest method but requires you to be on the tab you want to capture.
+        </div>
+      </div>
+      
+      <div id="desktopCapture" class="option-card method-card">
+        <svg class="method-icon" viewBox="0 0 24 24">
+          <path d="M21,16H3V4H21M21,2H3C1.89,2 1,2.89 1,4V16A2,2 0 0,0 3,18H10V20H8V22H16V20H14V18H21A2,2 0 0,0 23,16V4C23,2.89 22.1,2 21,2Z" />
+        </svg>
+        <div class="option-header">
+          <input type="radio" id="captureDesktop" name="captureMethod" value="desktop">
+          <label class="option-title" for="captureDesktop">Screen/Window Capture</label>
+        </div>
+        <div class="option-description">
+          Lets you select your entire screen, a specific application window, or another browser tab to capture. Gives you more flexibility to capture anything on your computer.
+        </div>
+      </div>
+      
+      <div id="clipboardCapture" class="option-card method-card">
+        <svg class="method-icon" viewBox="0 0 24 24">
+          <path d="M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3M7,7H17V5H19V19H5V5H7V7Z" />
+        </svg>
+        <div class="option-header">
+          <input type="radio" id="captureClipboard" name="captureMethod" value="clipboard">
+          <label class="option-title" for="captureClipboard">Clipboard Monitoring</label>
+        </div>
+        <div class="option-description">
+          Use your operating system's screenshot tool (like Win+Shift+S on Windows), then the extension will automatically upload the image from your clipboard to ChatGPT.
+        </div>
+      </div>
+    </div>
+    
+    <div class="settings-group">
+      <div class="settings-title">
+        <svg class="settings-title-icon" viewBox="0 0 24 24">
+          <path d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" />
+        </svg>
+        General Settings
+      </div>
+      
+      <div class="option-card">
+        <div class="option-header">
+          <input type="checkbox" id="showNotifications" name="showNotifications">
+          <label class="option-title" for="showNotifications">Show Notifications</label>
+        </div>
+        <div class="option-description">
+          Display notifications when taking and uploading screenshots. This helps you know when actions are completed or if there are any errors.
+        </div>
+      </div>
+      
+      <div class="option-card">
+        <div class="option-header">
+          <input type="checkbox" id="autoClose" name="autoClose">
+          <label class="option-title" for="autoClose">Auto-close Popup</label>
+        </div>
+        <div class="option-description">
+          Automatically close the popup after taking a screenshot. This streamlines your workflow by closing the extension popup after capturing.
+        </div>
+      </div>
+    </div>
+    
+    <div class="save-section">
+      <button id="save">
+        <svg class="icon" viewBox="0 0 24 24">
+          <path d="M17,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3M19,19H5V5H16.17L19,7.83V19M12,12A3,3 0 0,0 9,15A3,3 0 0,0 12,18A3,3 0 0,0 15,15A3,3 0 0,0 12,12M12,16A1,1 0 0,1 11,15A1,1 0 0,1 12,14A1,1 0 0,1 13,15A1,1 0 0,1 12,16Z" />
+        </svg>
+        Save Settings
+      </button>
+      <div id="status">Settings saved!</div>
+    </div>
+  </div>
+  
+  <footer>
+    QuickPic for ChatGPT v1.0 • <a href="https://github.com/Anubis-Labs/QuickPic-for-ChatGPT" target="_blank">GitHub Repository</a> • Made with ♥ by Anubis Labs
+  </footer>
+  
+  <script src="options.js"></script>
+  <script>
+    // Add active class to selected method card
+    function updateMethodCards() {
+      const methodCards = document.querySelectorAll('.method-card');
+      methodCards.forEach(card => card.classList.remove('active'));
+      
+      const selectedMethod = document.querySelector('input[name="captureMethod"]:checked');
+      if (selectedMethod) {
+        const cardId = selectedMethod.value === 'tab' ? 'tabCapture' :
+                       selectedMethod.value === 'desktop' ? 'desktopCapture' : 'clipboardCapture';
+        document.getElementById(cardId).classList.add('active');
+      }
+    }
+    
+    // Update UI when radio buttons change
+    document.querySelectorAll('input[name="captureMethod"]').forEach(radio => {
+      radio.addEventListener('change', updateMethodCards);
+    });
+    
+    // Initialize cards on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(updateMethodCards, 100);
+      
+      // Override save function to add animation
+      const originalSave = window.saveSettings;
+      const statusElem = document.getElementById('status');
+      
+      window.saveSettings = function() {
+        originalSave();
+        statusElem.classList.add('visible');
+        setTimeout(() => {
+          statusElem.classList.remove('visible');
+        }, 2000);
+      };
+    });
+  </script>
+</body>
+</html> 

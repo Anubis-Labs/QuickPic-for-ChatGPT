@@ -6,7 +6,10 @@
   "permissions": [
     "activeTab",
     "scripting",
-    "downloads"
+    "downloads",
+    "desktopCapture",
+    "clipboardRead",
+    "storage"
   ],
   "host_permissions": [
     "https://chat.openai.com/*",
@@ -41,5 +44,6 @@
     "16": "icon.svg",
     "48": "icon.svg",
     "128": "icon.svg"
-  }
+  },
+  "options_page": "options.html"
 } 
